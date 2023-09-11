@@ -25,26 +25,14 @@ const notesArray = []
 const addNote = (inputValue) => {
 
     
-    for(let note of notesArray) {
-        
-        if(note.title === inputValue) {
-            inputValue = '';
-        }
-    }
-
-    
 
     if(!inputValue) {
-        divError.classList.add('active')
-        
-        setInterval(() => {
-           divError.classList.remove('active')
-        }, 5000)
-
+    
+        console.log(notesArray)
     } else {
 
     // database Notes
-    let databaseNotes = {title: inputValue}
+    let databaseNotes = {title: inputValue, index: 0 + notesArray.length}
     notesArray.push(databaseNotes)
     //---------------------------------------------
 

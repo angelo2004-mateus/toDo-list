@@ -14,27 +14,6 @@ main {
     height: 100vh;
 }
 
-.error {
-    opacity: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 3rem;
-    width: 9rem;
-    height: 2rem;
-    background-color: #f23857;
-    color: #660d1cbb;
-    border-radius: .3rem;
-  
-}
-
-
-.error.active {
-    transition: .4s;
-    top: 4rem;
-    opacity: 1;
-}
 
 .notes_container {
     display: flex;
