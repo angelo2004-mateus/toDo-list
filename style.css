@@ -15,6 +15,33 @@ main {
 }
 
 
+
+.edit_note {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 3rem;
+    position: absolute;
+    color: white;
+    background: #212224;
+    border-radius: .5rem;
+    width: 20rem;
+    box-shadow: 0px 0px 100px 1000px rgba(8, 8, 8, 0.301);
+    border: 2px solid #7338F2;
+}
+
+.edit_note button {
+    outline: none;
+    border: none;
+    background: #7338F2;
+    color: white;
+    font-size: 1.4rem;
+    padding: .5rem 4.5rem;
+    border-radius: 10rem;
+}
+
 .notes_container {
     display: flex;
     flex-direction: column;
@@ -22,6 +49,10 @@ main {
     width: 40rem;
     height: 22rem;
     background: #0D0D0D;
+}
+
+.edit_note.active {
+    display: flex;
 }
 
 input {
@@ -75,10 +106,15 @@ input {
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
+    background-color: #1649FF;
     color: rgb(211, 211, 211);
     font-size: 1rem;
     width: 100%;
     height: 3.5rem;
+}
+
+.note.active {
+    background: red;
 }
 
 .note.animation_remove {
@@ -92,10 +128,10 @@ input {
     }
 }
 
-.note:hover {
+/* .note:hover {
     transition: .3s;
     background: #21222442;
-}
+} */
 
 .newTitle.active {
     text-decoration: line-through;
@@ -115,7 +151,7 @@ input {
     width: 8rem;
 }
 
-.buttons_edit {
+.done-todo, .edit-todo, .remove-todo{
     background: #212224;
     color: #ffffff77;
     outline: none;
