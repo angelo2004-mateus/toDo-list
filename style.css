@@ -10,7 +10,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #e8e8e8;
+    background: #212121;
     height: 100vh;
 }
 
@@ -24,7 +24,9 @@ main {
     padding: 3rem;
     position: absolute;
     color: white;
-    background: #212224;
+    background-color: rgba(65, 65, 65, 0.308);
+    backdrop-filter: blur(9rem);
+    border: 1px solid rgba(255, 255, 255, 0.089);
     border-radius: .5rem;
     width: 20rem;
     box-shadow: 0px 0px 100px 1000px rgba(8, 8, 8, 0.301);
@@ -36,9 +38,11 @@ main {
 
 
 .close_editNote {
-    background-color: black;
+    background-color: rgb(90, 90, 90);
+    border: 1px solid rgba(255, 255, 255, 0.432);
+    color: rgba(255, 255, 255, 0.452);
     border-radius: 50%;
-    padding: .5rem .7rem;
+    padding: .4rem .7rem;
     position: absolute;
     top: -.8rem;
     right: -.8rem;
@@ -57,7 +61,7 @@ main {
     background: #0550ED;
     color: white;
     font-size: 1.4rem;
-    padding: .5rem 4.5rem;
+    padding: .5rem 2rem;
     border-radius: .2rem;
 }
 
@@ -68,9 +72,11 @@ main {
 
 
 .notes_container {
+    background: transparent;
+    position: relative;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    border-radius: 1rem;
     width: 30rem;
     height: 22rem;
 }
@@ -102,7 +108,7 @@ input {
 
 
 .box_inpt_btn {
-    border-radius: .5rem;
+    border-radius: .2rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -110,13 +116,17 @@ input {
     height: 5rem;
     width: 100%;
     padding: 3rem 1rem;
-    background: #232124;
+    backdrop-filter: blur(30px);
+    background-color: rgba(65, 65, 65, 0.308);
+    border: 1px solid rgba(255, 255, 255, 0.089);
 }
 
 .notes_box {
-    background-color: white;
+    backdrop-filter: blur(30px);
+    background-color: rgba(65, 65, 65, 0.308);
+    border: 1px solid rgba(255, 255, 255, 0.089);
     margin-top: .4rem;
-    border-radius: .5rem;
+    border-radius: .2rem;
     overflow-y: scroll;
     gap: .2rem;
     font-size: 1.4rem;
@@ -141,6 +151,7 @@ input {
 
 .note.active {
     text-decoration: line-through;
+    background: rgba(255, 255, 255, 0.089);
 }
 
 .note.animation_remove {
@@ -174,9 +185,13 @@ input {
 }
 
 .done-todo, .edit-todo, .remove-todo{
-    background: #e8e8e8;
-    color: #666464;
-    border: 1px solid #666464;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(30px);
+    background-color: rgba(112, 110, 110, 0.308);
+    border: 1px solid rgba(255, 255, 255, 0.432);
+    color: rgba(255, 255, 255, 0.452);
     opacity: .4;
     outline: none;
     margin: 0 .2rem;
@@ -189,4 +204,10 @@ input {
 button:hover {
     transition: .3s;
     opacity: .8;
+}
+
+@media (max-width:600px) {
+    .notes_container {
+        width: 90%;
+    }
 }

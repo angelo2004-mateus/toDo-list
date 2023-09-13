@@ -1,3 +1,6 @@
+export default function interationsTodoList() {
+
+
 const addNote = document.querySelector('.add_note'), 
 input = document.querySelector('.description_note'),
 notesBox = document.querySelector('.notes_box'),
@@ -5,7 +8,7 @@ divError = document.querySelector('.error');
 
 
 let oldInputValue;
-
+let isChecked;
 // MODAL ----------------------------------
 const editNote = document.querySelector('.edit_note'),
 buttonEditNote = document.querySelector('.button_edit_note'),
@@ -18,9 +21,9 @@ let notesArray = new Array();
 let notesArrayFromLocalStorage = new Array();
 let notesObj;
 
-const addNewNote = (text) => {
-    
-    notesObj = {title: text};
+const addNewNote = (text, isChecked) => {
+
+    notesObj = {title: text, checked: isChecked};
     notesArray.push(notesObj);
     localStorage.setItem("notes", JSON.stringify(notesArray));
 
@@ -41,19 +44,19 @@ const addNewNote = (text) => {
     const btnDone = document.createElement("button");
     btnDone.classList.add("done-todo");
     btnDone.innerHTML = 'D'
-    //btnDone.innerHTML = '<i class="uil uil-check"></i>';
+    btnDone.innerHTML = '<i class="uil uil-check"></i>';
     boxButtons.appendChild(btnDone);
 
     const btnEdit = document.createElement("button");
     btnEdit.classList.add("edit-todo");
     btnEdit.innerHTML = 'E'
-    //btnEdit.innerHTML = '<i class="uil uil-edit"></i>';
+    btnEdit.innerHTML = '<i class="uil uil-pen"></i>';
     boxButtons.appendChild(btnEdit);
     
     const btnRemove = document.createElement("button");
     btnRemove.classList.add("remove-todo");
     btnRemove.innerHTML = 'R'
-    //btnRemove.innerHTML = '<i class="uil uil-trash"></i>';
+    btnRemove.innerHTML = '<i class="uil uil-trash"></i>';
     boxButtons.appendChild(btnRemove);
 
     input.value = '';
@@ -61,17 +64,7 @@ const addNewNote = (text) => {
 
 }
 
-if(window.load = true ) {
-    notesArrayFromLocalStorage = JSON.parse(localStorage.getItem("notes"))
 
-    if(!notesArrayFromLocalStorage) {
-        notesArrayFromLocalStorage = 0
-
-    }else {
-        notesArrayFromLocalStorage.forEach(item => addNewNote(item.title))
-    }
-   
-}
 
 addNote.addEventListener('click', (e) => {
     const inputValue = input.value;
@@ -92,15 +85,29 @@ document.addEventListener('click', (e) => {
 
     if(parentCurrentBtn && parentCurrentBtn.querySelector('p')) {
         noteTitle = parentCurrentBtn.querySelector('p').innerText
+        
     }
 
-    if(currentBtn.classList.contains('done-todo')) {
+    if(currentBtn.classList.contains('done-todo') || currentBtn.classList.contains('uil-check')) {
         noteTitle = parentCurrentBtn.querySelector('p');
         parentCurrentBtn.classList.toggle('active');
+        let index = notesArray.findIndex(obj => obj.title == noteTitle.innerHTML);
+        
+        if(notesArray[index].checked == undefined || notesArray[index].checked == false) {
+            notesArray[index].checked = true;   
+        } 
+        
+        else if(notesArray[index].checked == true) {
+            notesArray[index].checked = false;
+        }
+
+
+        console.log(isChecked, notesObj)
+        localStorage.setItem("notes", JSON.stringify(notesArray));
     }
 
 
-    if(currentBtn.classList.contains('remove-todo')) {
+    if(currentBtn.classList.contains('remove-todo') || currentBtn.classList.contains('uil-trash')) {
         noteTitle = parentCurrentBtn.querySelector('p');
         let indice = notesArray.findIndex(obj => obj.title == noteTitle.innerHTML);
         notesArray.splice(indice, 1);
@@ -108,7 +115,7 @@ document.addEventListener('click', (e) => {
         localStorage.setItem("notes", JSON.stringify(notesArray));
     }
     
-    if(currentBtn.classList.contains('edit-todo')) {
+    if(currentBtn.classList.contains('edit-todo') || currentBtn.classList.contains('uil-pen')) {
         editNote.classList.add('active');
 
         editInput.value = noteTitle;
@@ -148,5 +155,19 @@ buttonEditNote.addEventListener('click', () => {
 });
 
 closeModalEditNote.addEventListener('click', () => editNote.classList.remove('active'))
+
+
+if(window.load = true ) {
+    notesArrayFromLocalStorage = JSON.parse(localStorage.getItem("notes"))
+
+    if(!notesArrayFromLocalStorage) {
+        notesArrayFromLocalStorage = 0;
+
+    }else {
+        notesArrayFromLocalStorage.forEach(item => addNewNote(item.title, item.checked))
+    }
+   
+}
+}
 
 
