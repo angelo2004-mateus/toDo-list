@@ -1,3 +1,5 @@
+import lastModification from "./lastModification.js"
+
 export default function interationsTodoList() {
 
 
@@ -8,7 +10,6 @@ divError = document.querySelector('.error');
 
 
 let oldInputValue;
-let isChecked;
 // MODAL ----------------------------------
 const editNote = document.querySelector('.edit_note'),
 buttonEditNote = document.querySelector('.button_edit_note'),
@@ -21,16 +22,25 @@ let notesArray = new Array();
 let notesArrayFromLocalStorage = new Array();
 let notesObj;
 
+let isChecked;
 const addNewNote = (text, isChecked) => {
 
     notesObj = {title: text, checked: isChecked};
     notesArray.push(notesObj);
+    
     localStorage.setItem("notes", JSON.stringify(notesArray));
 
     const newNote = document.createElement("div");
     newNote.classList.add("note");
     notesBox.appendChild(newNote);
     //console.log(newNote.previousSibling)
+
+    newNote.classList.add('createdNewNote')
+
+    if(notesObj.checked == true) {
+        newNote.classList.add('active')
+        console.log(notesObj)
+     }
 
     const newTitle = document.createElement("p");
     newTitle.classList.add('new_title')
@@ -62,6 +72,7 @@ const addNewNote = (text, isChecked) => {
     input.value = '';
     input.focus();
 
+
 }
 
 
@@ -71,7 +82,7 @@ addNote.addEventListener('click', (e) => {
 
     if(inputValue) {
         addNewNote(inputValue);
-        console.log(notesArray)
+        lastModification()
     }
 })
 
@@ -88,22 +99,25 @@ document.addEventListener('click', (e) => {
         
     }
 
-    if(currentBtn.classList.contains('done-todo') || currentBtn.classList.contains('uil-check')) {
-        noteTitle = parentCurrentBtn.querySelector('p');
-        parentCurrentBtn.classList.toggle('active');
-        let index = notesArray.findIndex(obj => obj.title == noteTitle.innerHTML);
+
+        if(currentBtn.classList.contains('done-todo') || currentBtn.classList.contains('uil-check')) {
+            noteTitle = parentCurrentBtn.querySelector('p');
+            parentCurrentBtn.classList.toggle('active');
+            let index = notesArray.findIndex(obj => obj.title == noteTitle.innerHTML);
         
-        if(notesArray[index].checked == undefined || notesArray[index].checked == false) {
-            notesArray[index].checked = true;   
+        if(notesArray[index].checked == undefined || notesArray[index].checked == false) {  
+            notesArray[index].checked = true;  
+            isChecked = true;
+            localStorage.setItem("notes", JSON.stringify(notesArray)); 
         } 
         
         else if(notesArray[index].checked == true) {
             notesArray[index].checked = false;
+            isChecked = false;
+            localStorage.setItem("notes", JSON.stringify(notesArray));
         }
 
 
-        console.log(isChecked, notesObj)
-        localStorage.setItem("notes", JSON.stringify(notesArray));
     }
 
 
@@ -111,7 +125,11 @@ document.addEventListener('click', (e) => {
         noteTitle = parentCurrentBtn.querySelector('p');
         let indice = notesArray.findIndex(obj => obj.title == noteTitle.innerHTML);
         notesArray.splice(indice, 1);
-        parentCurrentBtn.remove();
+        parentCurrentBtn.classList.add('noteRemove')
+        setTimeout(() => {
+             parentCurrentBtn.remove();
+        }, 600)
+       
         localStorage.setItem("notes", JSON.stringify(notesArray));
     }
     
@@ -158,7 +176,9 @@ closeModalEditNote.addEventListener('click', () => editNote.classList.remove('ac
 
 
 if(window.load = true ) {
+    input.focus()
     notesArrayFromLocalStorage = JSON.parse(localStorage.getItem("notes"))
+
 
     if(!notesArrayFromLocalStorage) {
         notesArrayFromLocalStorage = 0;
